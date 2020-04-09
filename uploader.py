@@ -35,6 +35,8 @@ class Uploader:
     UPLOAD_PACKAGE = 'nirepo/v1/upload-packages?shouldOverwrite={should_overwrite}'
     GET_JOB = 'nirepo/v1/jobs/{job_id}'
     ADD_PACKAGE_REFERENCE = 'nirepo/v1/feeds/{feed_id}/add-package-references'
+    CREATE_FEED = 'nirepo/v1/feeds'
+    GET_FEEDS = 'nirepo/v1/feeds'
 
     JOB_WAIT_SLEEP_TIME_SECONDS = 1
 
@@ -65,6 +67,8 @@ class Uploader:
         self.upload_package_url = self.systemlink_server_url + self.UPLOAD_PACKAGE
         self.get_job_url = self.systemlink_server_url + self.GET_JOB
         self.add_package_url = self.systemlink_server_url + self.ADD_PACKAGE_REFERENCE
+        self.create_feed_url = self.systemlink_server_url + self.CREATE_FEED
+        self.get_feeds_url = self.systemlink_server_url + self.GET_FEEDS
         self.auth = HTTPBasicAuth(self.username, self.password)
 
     def run(self):
@@ -97,6 +101,30 @@ class Uploader:
             print(error)
             sys.exit(1)
         sys.exit(0)
+    
+    def get_feeds(self):
+        response = requests.get(url=self.get_feeds_url, auth=(self.username, self.password), verify=False)
+        return response
+    
+    def create_feed(self, feed_name, name, description='', platform='windows', workspace=None):
+        feed_info = {
+            "feedName": feed_name,
+            "name": name,
+            "description": description,
+            "platform": platform,
+            "workspace": workspace
+        }
+        response = requests.post(url=self.create_feed_url, json=feed_info, auth=(self.username, self.password), verify=False)
+        if response.status_code >= 300:
+            print("Error: Request to create a feed returned status code {status_code} "
+                  "with message {message}"
+                  .format(status_code=response.status_code, message=response.json()))
+        else:
+            try:
+                procesed_job = self.process_job_result(job_id=response.json()['jobId'])
+                print(procesed_job)
+            except RepoError:
+                pass
 
     # Function for clients wishing to call the class programmatically
     def upload_and_add(self, filename: str, feed_id: str):
