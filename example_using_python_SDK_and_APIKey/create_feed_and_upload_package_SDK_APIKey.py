@@ -2,13 +2,13 @@
 from systemLink_package_repo_client import SystemLink_Package_Repo_Client
 import asyncio
 
-s_Host= "http://DE-MUN-DP9XPH2.ni.corp.natinst.com:9090"  # http(s)://server:port 
+s_Host= "http://localhost:9090"  # http(s)://server:port 
 s_APIKey = "KpTb6ujPqMq3bH-4k9g2uxyYXNraR0oPhE_40fIeKP"   # APIKey secret generated from method POST /keys
 s_FeedName = s_Name = "My Feed" # feed name
 s_Feed_Description = "my description" # feed description
 s_Platform ="windows"  # platform for which the feed is created 
-s_Workspace_ID = "5e680020-6471-4896-b4dc-e136173c7bf6" # ID of the workspace to which the feed belongs
-s_Path = r"C:\Users\grperina\Desktop\eula-ni-standard.nipkg" # path of the package to be added to the feed
+s_Workspace_ID = "5e680020-6471-4896-b4dc-e136173c7bf6" # ID of the workspace to which the feed belongs. See readme file
+s_Path = r"C:\yourpath\yourpackagename.nipkg" # path of the package to be added to the feed
 
 SL_Repo_Client =SystemLink_Package_Repo_Client(s_Host, s_APIKey)
 
