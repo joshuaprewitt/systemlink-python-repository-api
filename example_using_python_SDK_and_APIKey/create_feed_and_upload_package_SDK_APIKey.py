@@ -2,7 +2,7 @@
 from systemLink_package_repo_client import SystemLink_Package_Repo_Client
 import asyncio
 
-s_Host= "http://localhost:9090"  # http(s)://server:port 
+s_Host= "http://localhost:9090/nirepo"  # http(s)://server:port/nirepo
 s_APIKey = "KpTb6ujPqMq3bH-4k9g2uxyYXNraR0oPhE_40fIeKP"   # APIKey secret generated from method POST /keys
 s_FeedName = s_Name = "My Feed" # feed name
 s_Feed_Description = "my description" # feed description
